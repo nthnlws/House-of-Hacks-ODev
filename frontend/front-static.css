@@ -34,6 +34,11 @@ input[type=number] {
     color: white;
 }
 
+#left-side ul{
+    list-style: none;
+
+}
+
 #right-side{
     background: #ecdfcc;
     width: 60%;
