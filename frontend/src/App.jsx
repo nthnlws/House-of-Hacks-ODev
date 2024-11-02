@@ -2,9 +2,10 @@ import List from "./components/List/List";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css"
 import Form from "./components/Form/Form";
-import { useState } from "react";
-
-const tasks = [
+import { useState, useEffect } from "react";
+import { createProperty, createTaskTemplate, getAllProperties, getAllTaskTemplates, listActiveTasks } from "./HTTPClient";
+import { format, differenceInDays } from "date-fns";
+const temp = [
     {
         priority: 'high',
         items: [
@@ -46,14 +47,67 @@ const tasks = [
     },
 ];
 
+const reformatTasks = (tasks) => {
+    // Group tasks by priority
+    const groupedTasks = tasks.reduce((acc, task) => {
+        const { priority, name, createdAt, description, dueDate } = task;
+
+        // Format date and calculate the deadline
+        const formattedDate = format(new Date(createdAt), "MMMM d yyyy");
+        const deadline = `${differenceInDays(new Date(dueDate), new Date())} days`;
+
+        // Create the reformatted task object
+        const formattedTask = {
+            title: name,
+            date: formattedDate,
+            description,
+            deadline
+        };
+
+        // Add to the priority group
+        if (!acc[priority]) {
+            acc[priority] = { priority, items: [] };
+        }
+        acc[priority].items.push(formattedTask);
+
+        return acc;
+    }, {});
+
+    // Convert the grouped tasks object to an array
+    return Object.values(groupedTasks);
+};
+
+// const formattedTasks = reformatTasks(tasks);
 
 export default function App() {
     const [showForm, setShowForm] = useState(false)
+    const [data, setData] = useState(null)
+    const [tasks, setTasks] = useState(temp)
+    useEffect(() => {
+        if (data) {
+            // const idk = createProperty(data).then((val) => console.log(val))
+            // getAllProperties().then((val) => console.log(val))
+            listActiveTasks("67267df80107b04ef0f6c11a").then((val) => setTasks(reformatTasks(val)))
+        }
+    }, [data]);
+    useEffect(() => {
+        if (showForm) {
+            document.body.style.overflowY = "hidden";
+        } else {
+            document.body.style.overflowY = "auto";
+        }
+
+        // Cleanup function to reset overflow when component unmounts or showForm changes
+        return () => {
+            document.body.style.overflowY = "auto";
+        };
+    }, [showForm]);
     return (
         <>
             <Navbar setShowForm={setShowForm}></Navbar>
             <List tasks={tasks}></List>
-            {showForm && <Form></Form>}
+            {showForm && <Form setShowForm={setShowForm} data={data} setData={setData}></Form>
+            }
         </>
     )
 }
