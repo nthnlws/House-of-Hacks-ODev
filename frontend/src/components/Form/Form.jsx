@@ -1,28 +1,30 @@
 import { useState } from "react";
 import "./Form.css";
-import { createProperty } from "../../HTTPClient";
+
 
 export default function Form({ setShowForm, data, setData }) {
     // Create a state to store form input values
-    // FIX OVERFLOW
     const [formData, setFormData] = useState({
+        homeType: "",
         address: "",
         city: "",
         state: "",
         zipcode: "",
         rooms: "",
         sqrFeet: "",
-        bathrooms: ""
+        bathrooms: "",
+        yardSize: "",
+        pool: "",
+        ac: "",
+        homePrice: ""
     });
 
     // Handle change for input fields
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        // Check if the field should be a number, then parse it
         setFormData(prevFormData => ({
             ...prevFormData,
-            [name]: ["zipcode", "rooms", "sqrFeet", "bathrooms"].includes(name) ? parseFloat(value) || "" : value
+            [name]: value
         }));
     };
 
@@ -44,38 +46,92 @@ export default function Form({ setShowForm, data, setData }) {
             </div>
             <div id="main-container">
                 <div id="left-side">
-                    <h2>Welcome to TaskNest</h2>
-                    <span>Join your community online!</span>
-                    <p>Discover all the ways TaskNest can help</p>
+                    <h2>Welcome to NestNotes</h2>
+                    <p>Join your community online, discover all the ways NestNotes can help!</p>
                     <ul>
-                        <li>See how your home value or rent compares to your area</li>
-                        <li>Keep track of tasks around your home</li>
-                        <li>Receive AI insights on tips and tricks to keep your home stocked and safe</li>
+                        <li>
+                            <span>Smart Maintenance Management</span>
+                            <p>Automate your home care with personalized reminders and countdowns, ensuring no task is ever overlooked.</p>
+                        </li>
+                        <li>
+                            <span>AI-Driven Insights</span>
+                            <p>Leverage cutting-edge AI to receive tailored tips and maintenance suggestions based on your unique home setup, making home management effortless.</p>
+                        </li>
+                        <li>
+                            <span>Comprehensive Home Profile</span>
+                            <p>Easily input details about your home—size, features, and value—to receive a customized maintenance plan that keeps your property in peak condition.</p>
+                        </li>
                     </ul>
                 </div>
                 <div id="right-side">
                     <h2>Let's get started!</h2>
-                    <p>Let's team up! Share a bit about yourself so we can connect you with your neighborhood and provide you with the best info possible.</p>
-                    <form onSubmit={handleSubmit} className="">
+
+                    <form onSubmit={handleSubmit}>
                         <div className="address-inputs">
+                            <label htmlFor="home-type">What kind of home do you have?</label>
+
+                            <select name="homeType" id="home-type" value={formData.homeType} onChange={handleChange} required>
+                                <option value="" disabled>Select an option</option>
+                                <option value="house">House</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="other">Other</option>
+                            </select>
+
                             <label htmlFor="address">What is your address?</label>
+
                             <input type="text" name="address" id="address" value={formData.address} onChange={handleChange} required />
+
                             <label htmlFor="city">What city do you live in?</label>
+
                             <input type="text" name="city" id="city" value={formData.city} onChange={handleChange} required />
+
                             <label htmlFor="state">What state is your city in?</label>
+
                             <input type="text" name="state" id="state" value={formData.state} onChange={handleChange} required />
+
                             <label htmlFor="zipcode">What is your zip code?</label>
+
                             <input type="number" name="zipcode" id="zipcode" value={formData.zipcode} onChange={handleChange} required />
+
                         </div>
                         <div className="home-inputs">
                             <label htmlFor="rooms">How many rooms in your home?</label>
+
                             <input type="number" name="rooms" id="rooms" value={formData.rooms} onChange={handleChange} required />
+
                             <label htmlFor="sqr-feet">How many sqr feet in your home?</label>
+
                             <input type="number" name="sqrFeet" id="sqr-feet" value={formData.sqrFeet} onChange={handleChange} required />
+
                             <label htmlFor="bathrooms">How many bathrooms does your home have?</label>
+
                             <input type="number" name="bathrooms" id="bathrooms" value={formData.bathrooms} onChange={handleChange} required />
+
+                            <label htmlFor="yard-size">How many acres is your yard?</label>
+
+                            <input type="text" name="yardSize" id="yard-size" value={formData.yardSize} onChange={handleChange} required />
+
+                            <label htmlFor="pool">Does your home have a pool?</label>
+
+                            <select name="pool" id="pool" value={formData.pool} onChange={handleChange} required>
+                                <option value="" disabled>Select an option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+
+                            <label htmlFor="ac">What kind of ac is in your home?</label>
+
+                            <select name="ac" id="ac" value={formData.ac} onChange={handleChange} required>
+                                <option value="" disabled>Select an option</option>
+                                <option value="central">Central</option>
+                                <option value="window">Window</option>
+                            </select>
+
+                            <label htmlFor="home-price">What is the value of your home?</label>
+
+                            <input type="number" name="homePrice" id="home-price" value={formData.homePrice} onChange={handleChange} required />
                         </div>
-                        <button type="submit">Enter</button>
+                        <button type="submit">Submit</button>
                     </form>
                 </div>
             </div>
