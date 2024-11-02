@@ -1,0 +1,76 @@
+#list-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+}
+
+#list-container li {
+    margin-bottom: 2%;
+}
+
+#list-container p {
+    margin: 0
+}
+
+#high-priority-tasks li {
+    border-left: 2px solid #F96C6A;
+}
+
+#mid-priority-tasks li {
+
+    border-left: 2px solid #F9CA00;
+}
+
+#low-priority-tasks li {
+
+    border-left: 2px solid #4CBC74;
+}
+
+.priority {
+    background-color: #F96C6A;
+    max-width: min-content;
+    text-wrap: nowrap;
+    color: white;
+    padding-left: 2%;
+    padding-right: 2%;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+#low-priority {
+    background-color: #4CBC74;
+}
+
+#mid-priority {
+    background-color: #F9CA00;
+}
+
+#task>header,
+#task>section {
+    display: flex;
+    align-items: center;
+    column-gap: 20%;
+    justify-content: space-between;
+    padding-left: 2%;
+}
+
+
+#task {
+    min-width: 300px;
+}
+
+.date,
+.title,
+.deadline {
+    text-wrap: nowrap;
+}
+
+#list-container {
+    margin: 10%;
+}
+
+#list-container h2 {
+    margin: 0;
+
+}
