@@ -1,0 +1,55 @@
+body{
+    background: #3c3d37;
+}
+
+/* Hide spinner in WebKit browsers */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hide spinner in Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+#main-container{
+    border: 1px solid black;
+    margin: 50px auto;
+    width: 80%;
+    border-radius: 5px;
+    display: flex;
+    height: auto;
+    justify-content: center;  
+    align-content: center;
+    box-shadow: 10px 5px 5px #ffffff;
+}
+
+#left-side{
+    width: 40%;
+    padding: 5px;
+    background: #697565;
+    color: white;
+}
+
+#right-side{
+    background: #ecdfcc;
+    width: 60%;
+    padding: 5px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#right-side p{
+    width: 190px;
+}
+
+#right-side form {
+    display: flex;
+    flex-direction: column;
+    width: 190px;
+}
