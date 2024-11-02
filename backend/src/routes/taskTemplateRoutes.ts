@@ -1,15 +1,18 @@
 import express, { Request, Response } from "express";
 import TaskTemplate from "../models/TaskTemplate";
+import logger from "../utils/logger";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // Create a new task template
 router.post("/", async (req, res) => {
   try {
     const taskTemplate = new TaskTemplate(req.body);
     const savedTaskTemplate = await taskTemplate.save();
+    logger.info(`Created new task template with ID: ${savedTaskTemplate._id}`);
     res.status(201).json(savedTaskTemplate);
   } catch (error: any) {
+    logger.error("Error creating task template:", error);
     res.status(400).json({ message: error.message });
   }
 });
@@ -18,8 +21,10 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const taskTemplates = await TaskTemplate.find();
+    logger.info("Fetched all task templates");
     res.json(taskTemplates);
   } catch (error: any) {
+    logger.error("Error fetching task templates:", error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -28,10 +33,14 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req: Request, res: Response) => {
   try {
     const taskTemplate = await TaskTemplate.findById(req.params.id);
-    if (!taskTemplate)
+    if (!taskTemplate) {
+      logger.warn(`TaskTemplate not found with ID: ${req.params.id}`);
       return res.status(404).json({ message: "TaskTemplate not found" });
+    }
+    logger.info(`Fetched task template with ID: ${req.params.id}`);
     res.json(taskTemplate);
   } catch (error: any) {
+    logger.error("Error fetching task template:", error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -44,10 +53,14 @@ router.put("/:id", async (req: Request, res: Response) => {
       req.body,
       { new: true }
     );
-    if (!updatedTaskTemplate)
+    if (!updatedTaskTemplate) {
+      logger.warn(`TaskTemplate not found with ID: ${req.params.id}`);
       return res.status(404).json({ message: "TaskTemplate not found" });
+    }
+    logger.info(`Updated task template with ID: ${req.params.id}`);
     res.json(updatedTaskTemplate);
   } catch (error: any) {
+    logger.error("Error updating task template:", error);
     res.status(400).json({ message: error.message });
   }
 });
@@ -58,10 +71,14 @@ router.delete("/:id", async (req: Request, res: Response) => {
     const deletedTaskTemplate = await TaskTemplate.findByIdAndDelete(
       req.params.id
     );
-    if (!deletedTaskTemplate)
+    if (!deletedTaskTemplate) {
+      logger.warn(`TaskTemplate not found with ID: ${req.params.id}`);
       return res.status(404).json({ message: "TaskTemplate not found" });
+    }
+    logger.info(`Deleted task template with ID: ${req.params.id}`);
     res.json({ message: "TaskTemplate deleted" });
   } catch (error: any) {
+    logger.error("Error deleting task template:", error);
     res
       .status(500)
       .json({ message: error?.message ?? "Internal server error" });
