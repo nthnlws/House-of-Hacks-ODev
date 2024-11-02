@@ -7,7 +7,11 @@ export default function List() {
                 <h2 className="priority" id="high-priority">high priority tasks</h2>
                 <ul>
                     <li>
-                        <div id="task">
+                        <div className="checkbox-wrapper-19">
+                            <input type="checkbox" id="cbtest-19" />
+                            <label for="cbtest-19" class="check-box"></label>
+                        </div>
+                        <div className="task">
                             <header>
                                 <h3 className="title">Title</h3>
                                 <p className="date">June 1 2020</p>
@@ -20,7 +24,7 @@ export default function List() {
                         </div>
                     </li>
                     <li>
-                        <div id="task">
+                        <div className="task">
                             <header>
                                 <h3 className="title">Title</h3>
                                 <p className="date">June 1 2020</p>
@@ -38,7 +42,7 @@ export default function List() {
                 <h2 className="priority" id="mid-priority">medium priority tasks</h2>
                 <ul>
                     <li>
-                        <div id="task">
+                        <div className="task">
                             <header>
                                 <h3 className="title">Title</h3>
                                 <p className="date">June 1 2020</p>
@@ -51,7 +55,7 @@ export default function List() {
                         </div>
                     </li>
                     <li>
-                        <div id="task">
+                        <div className="task">
                             <header>
                                 <h3 className="title">Title</h3>
                                 <p className="date">June 1 2020</p>
@@ -70,7 +74,7 @@ export default function List() {
                 <h2 className="priority" id="low-priority">low priority tasks</h2>
                 <ul>
                     <li>
-                        <div id="task">
+                        <div className="task">
                             <header>
                                 <h3 className="title">Title</h3>
                                 <p className="date">June 1 2020</p>
@@ -83,7 +87,7 @@ export default function List() {
                         </div>
                     </li>
                     <li>
-                        <div id="task">
+                        <div className="task">
                             <header>
                                 <h3 className="title">Title</h3>
                                 <p className="date">June 1 2020</p>
