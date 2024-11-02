@@ -28,7 +28,7 @@ mongoose
   });
 
 // Use the task template routes
-app.use("/api/task-templates", taskTemplateRoutes);
+app.use("/api/properties/:propertyId/task-templates", taskTemplateRoutes);
 
 app.use("/api/properties/:propertyId/active-tasks", taskRoutes);
 app.use("/api/properties", propertyRoutes);

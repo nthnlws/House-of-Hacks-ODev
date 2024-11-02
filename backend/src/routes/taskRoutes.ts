@@ -1,8 +1,14 @@
 import express, { Request, Response } from "express";
+import { z, ZodError } from "zod";
 import Task from "../models/Task";
 import logger from "../utils/logger";
 
 const router = express.Router({ mergeParams: true });
+
+// Define Zod schemas
+const noteSchema = z.object({
+  note: z.string().min(1, "Note cannot be empty"),
+});
 
 // List all active tasks
 router.get("/", async (req: Request, res: Response) => {
@@ -28,6 +34,9 @@ router.get("/", async (req: Request, res: Response) => {
 // Add a note to an active task
 router.post("/:id/notes", async (req: Request, res: Response) => {
   try {
+    // Validate request body
+    noteSchema.parse(req.body);
+
     const { note } = req.body;
     const task = await Task.findById(req.params.id);
 
@@ -40,6 +49,10 @@ router.post("/:id/notes", async (req: Request, res: Response) => {
     await task.save();
     res.json(task);
   } catch (error: any) {
+    if (error instanceof ZodError) {
+      // Return validation errors
+      return res.status(400).json({ errors: error.errors });
+    }
     res.status(400).json({ message: error.message });
   }
 });

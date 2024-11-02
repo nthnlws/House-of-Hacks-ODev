@@ -33,6 +33,15 @@ const propertySchema = new mongoose.Schema(
     status: {
       type: String,
     },
+    has_pool: {
+      type: Boolean,
+    },
+    ac_type: {
+      type: String,
+    },
+    floor_type: {
+      type: String,
+    },
   },
   {
     timestamps: true,

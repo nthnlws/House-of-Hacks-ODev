@@ -1,17 +1,44 @@
 import express, { Request, Response } from "express";
+import { z } from "zod";
 import Property from "../models/Property";
-import logger from "../utils/logger";
 
-const router = express.Router({ mergeParams: true });
+const router = express.Router();
 
-// Create a new property
+// Define the Zod schema within the routes file
+const propertyZodSchema = z.object({
+  name: z.string({
+    required_error: "Name is required",
+  }),
+  address: z.string().optional(),
+  size: z.number().optional(),
+  type: z.string().optional(),
+  price: z.number().optional(),
+  bedrooms: z.number().optional(),
+  bathrooms: z.number().optional(),
+  yearBuilt: z.number().optional(),
+  description: z.string().optional(),
+  status: z.string().optional(),
+  has_pool: z.boolean().optional(),
+  ac_type: z.string().optional(),
+  floor_type: z.string().optional(),
+  roofing_type: z.string().optional(),
+});
+
+// Create a new property with Zod validation
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const property = new Property(req.body);
+    // Validate the request body using Zod
+    const validatedData = propertyZodSchema.parse(req.body);
+
+    const property = new Property(validatedData);
     const savedProperty = await property.save();
     res.status(201).json(savedProperty);
   } catch (error: any) {
-    logger.error("Error creating property:", error);
+    if (error instanceof z.ZodError) {
+      // Return validation errors
+      return res.status(400).json({ errors: error.errors });
+    }
+    console.error("Error creating property:", error);
     res.status(400).json({ message: error.message });
   }
 });
