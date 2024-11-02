@@ -12,6 +12,7 @@ export interface ITaskTemplate extends Document {
   priority: "low" | "medium" | "high";
   category: string;
   createdAt: Date;
+  property: string;
   updatedAt: Date;
 }
 
@@ -54,6 +55,11 @@ const TaskTemplateSchema: Schema = new Schema(
       type: String,
       required: true,
       trim: true,
+    },
+    property: {
+      type: Schema.Types.ObjectId,
+      ref: "Property",
+      required: true,
     },
   },
   {
