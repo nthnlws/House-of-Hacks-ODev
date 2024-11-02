@@ -132,12 +132,21 @@ input[type=number] {
 #left-side ul{
     list-style: none;
     padding: 0;
+}
 
+#left-side ul li span{
+    font-weight: bolder;
+    text-decoration: underline;
+
+}
+
+#left-side ul li p{
+    line-height: 150%;
 }
 
 #right-side {
     background: #ecdfcc;
-    /* width: 60%; */
+    width: 60%;
     padding: 5px;
     padding-left: 20px;
     display: flex;
@@ -153,5 +162,7 @@ input[type=number] {
 #right-side form {
     display: flex;
     flex-direction: column;
+    line-height: 130%;
+    
     /* width: 190px; */
 }
