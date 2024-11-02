@@ -23,7 +23,7 @@
     border-left: 2px solid #F96C6A;
 }
 
-#mid-priority-tasks .task {
+#medium-priority-tasks .task {
 
     border-left: 2px solid #F9CA00;
 }
@@ -48,7 +48,7 @@
     background-color: #4CBC74;
 }
 
-#mid-priority {
+#medium-priority {
     background-color: #F9CA00;
 }
 
@@ -64,6 +64,7 @@
 
 .task {
     min-width: 300px;
+    width: 100%;
 }
 
 .date,
